@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -7,46 +9,108 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #E9F404;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TotemController">
    <children>
-      <Label maxWidth="1.7976931348623157E308" text="Benvenuti a Poste Italiane" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <VBox prefHeight="200.0" prefWidth="76.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="700.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@res/creditCard.png" />
+                  <Image url="@res/logo.png" />
                </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
             </ImageView>
-            <Button mnemonicParsing="false" text="Correntisti Poste" />
          </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      </VBox>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="500.0" HBox.hgrow="ALWAYS">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@res/euro.png" />
-               </image>
-            </ImageView>
-            <Button mnemonicParsing="false" text="Pagamenti e Prelievi" />
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@res/creditCard.png" />
+                     </image>
+                  </ImageView>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Correntisti Poste" textOverrun="CLIP" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="135.0" mnemonicParsing="false" prefWidth="135.0" text="&gt;">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@res/euro.png" />
+                     </image>
+                  </ImageView>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Pagamenti e Prelievi" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin></Label>
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="135.0" mnemonicParsing="false" prefWidth="135.0" text="&gt;">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@res/delivery.png" />
+                     </image>
+                  </ImageView>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Spedizioni e Ritiri" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin></Label>
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="135.0" mnemonicParsing="false" prefWidth="135.0" text="&gt;">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@res/single.png" />
+                     </image>
+                  </ImageView>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Unica Operazione" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin></Label>
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="135.0" mnemonicParsing="false" prefWidth="135.0" text="&gt;">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@res/delivery.png" />
-               </image></ImageView>
-            <Button mnemonicParsing="false" text="Spedizioni e Ritiri" />
-         </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@res/single.png" />
-               </image></ImageView>
-            <Button mnemonicParsing="false" text="Unica Operazione" />
-         </children>
-      </HBox>
+      </VBox>
    </children>
-</VBox>
+</HBox>
