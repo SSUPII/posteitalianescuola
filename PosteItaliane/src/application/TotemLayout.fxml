@@ -32,7 +32,7 @@
                         <Image url="@res/creditCard.png" />
                      </image>
                   </ImageView>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Correntisti Poste" textOverrun="CLIP" HBox.hgrow="ALWAYS">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Correntisti Poste" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>

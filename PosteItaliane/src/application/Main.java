@@ -2,28 +2,23 @@ package application;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
-	
-	//public static Scene scene;
-	
+
+	public TotemController totemLayout;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			HBox root = (HBox)FXMLLoader.load(getClass().getResource("TotemLayout.fxml"));
-			primaryStage.setMinHeight(700);
-			primaryStage.setMinWidth(700);
-			primaryStage.setFullScreen(true);
-			Scene scene = new Scene(root,700,750);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			FXMLLoader fxml = new FXMLLoader();
+			fxml.setLocation(getClass().);
+			Parent root = fxml.load();
+			Scene scene = new Scene(root,700,700);
 			primaryStage.setScene(scene);
-			
-			//Controller controller = FXMLLoader.get
-			
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
