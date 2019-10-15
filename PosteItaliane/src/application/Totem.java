@@ -13,7 +13,15 @@ public class Totem extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		Thread desk1 = new Thread(new Desk());
+		desk1.run();
+		Thread desk2 = new Thread(new Desk());
+		desk2.run();
+		Thread desk3 = new Thread(new Desk());
+		desk3.run();
+
 		try {
+
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(getClass().getResource("TotemLayout.fxml"));
 			Parent root = fxml.load();
@@ -27,7 +35,7 @@ public class Totem extends Application {
 		}
 	}
 
-	public void initiate(String[] args) {
+	public static void main(String[] args) {
 		launch(args);
 	}
 }
