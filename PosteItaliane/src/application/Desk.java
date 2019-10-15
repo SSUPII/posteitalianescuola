@@ -17,7 +17,7 @@ public class Desk implements Runnable{
 	}
 	public Desk(String name){
 		this.name = name;
-		
+
 	}
 
 	public void start() {
@@ -30,7 +30,6 @@ public class Desk implements Runnable{
 			deskLayout = fxml.<DeskController>getController();
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		    System.out.println("DESCK ----- > Name = "+name);
 			deskLayout.setDeskName(name);
 		} catch(Exception e) {
 			e.printStackTrace();
