@@ -1,5 +1,7 @@
 package application;
 
+import application.Queue.Queue;
+
 public class Dispenser implements Runnable{
 
 	private Desk desk1 = new Desk("Sportello 1");
@@ -10,11 +12,22 @@ public class Dispenser implements Runnable{
 	private Thread desk2TR = new Thread(desk2);
 	private Thread desk3TR = new Thread(desk3);
 
+	Queue<String> queue = new Queue<String>();
+
 	Dispenser(){
 		desk1TR.run();
 		desk2TR.run();
 		desk3TR.run();
 	}
+
+	public void pushToQueue(String newData){
+		queue.push(newData);
+	}
+	public String popFromQueue(){
+		return queue.pop();
+	}
+
+
 
 	@Override
 	public void run() {
