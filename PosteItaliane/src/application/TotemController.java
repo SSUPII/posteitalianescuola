@@ -4,10 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class TotemController {
-	
+
 	@FXML
 	public Label creditCardLabel;
-	
+
+	private Dispenser dispenser = new Dispenser();
+	private Thread dispenserTR = new Thread(dispenser);
+
 	/*
 	public void prepareUIAnimations() {
 		Main.scene.widthProperty().addListener(new ChangeListener<Number>() {
@@ -17,11 +20,11 @@ public class TotemController {
 				if(newWidth.intValue() < 700) {
 					creditCardLabel.setFont(new Font("ZrnicRg-Regular",20));
 				}
-				
+
 			}
-			
+
 		});
-	
+
 	}
 	*/
 }

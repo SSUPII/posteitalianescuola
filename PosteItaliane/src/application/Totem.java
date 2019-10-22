@@ -11,15 +11,9 @@ public class Totem extends Application {
 
 	public TotemController totemLayout;
 
+
 	@Override
 	public void start(Stage primaryStage) {
-		Thread desk1 = new Thread(new Desk("Sportello 1"));
-		desk1.run();
-		Thread desk2 = new Thread(new Desk("Sportello 2"));
-		desk2.run();
-		Thread desk3 = new Thread(new Desk("Sportello 3"));
-		desk3.run();
-
 		try {
 
 			FXMLLoader fxml = new FXMLLoader();
