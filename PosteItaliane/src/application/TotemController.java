@@ -24,28 +24,28 @@ public class TotemController {
 		String request = "CP"+ ++creditCount;
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
-			dispenserTR.notify();
+			dispenser.LOCK.notify();
 		}
 	}
 	synchronized public void paymentRequested() {
 		String request = "P"+ ++paymentCount;
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
-			dispenserTR.notify();
+			dispenser.LOCK.notify();
 		}
 	}
 	synchronized public void deliveryRequested() {
 		String request = "SR"+ ++deliveryCount;
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
-			dispenserTR.notify();
+			dispenser.LOCK.notify();
 		}
 	}
 	synchronized public void singleOperationRequested() {
 		String request = "U"+ ++singleOperationCount;
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
-			dispenserTR.notify();
+			dispenser.LOCK.notify();
 		}
 	}
 	
