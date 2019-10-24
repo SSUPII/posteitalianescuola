@@ -1,8 +1,13 @@
 package application;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import application.Queue.Queue;
 
 public class Dispenser implements Runnable{
+	
+	final public Object LOCK = new Object();
 
 	private Desk desk1 = new Desk("Sportello 1");
 	private Desk desk2 = new Desk("Sportello 2");
@@ -16,8 +21,11 @@ public class Dispenser implements Runnable{
 	private boolean working = false;
 
 	Dispenser(){
+		desk1TR.setName("Desk1");
 		desk1TR.run();
+		desk2TR.setName("Desk2");
 		desk2TR.run();
+		desk3TR.setName("Desk3");
 		desk3TR.run();
 	}
 
@@ -28,7 +36,7 @@ public class Dispenser implements Runnable{
 		return queue.pop();
 	}
 
-	synchronized private void start() throws InterruptedException {
+	synchronized private void startRoutine() throws InterruptedException {
 		for(;;) {
 			if(queue.lenght()>=1) {
 				String data = queue.pop();
@@ -47,17 +55,26 @@ public class Dispenser implements Runnable{
 			}
 			else{
 				working = false;
-				wait();
+				synchronized(LOCK) {
+					wait();
+					System.out.print("finally");
+				}
 			}
 		}
 	}
 
 	@Override
 	public void run() {
-		try {
-			start();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		Timer delay = new Timer();
+		delay.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				try{
+					startRoutine();
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}}, 200);
 	}
 }

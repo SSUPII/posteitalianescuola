@@ -26,6 +26,8 @@ public class Totem extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			totemLayout = fxml.<TotemController>getController();
+			
+			totemLayout.bootDispenser();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
