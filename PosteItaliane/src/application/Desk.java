@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 public class Desk implements Runnable{
 
+	final public Object LOCK = new Object();
+	
 	public DeskController deskLayout;
 	private Stage primaryStage = new Stage();
 
@@ -19,7 +21,7 @@ public class Desk implements Runnable{
 	private Queue<String> queue = new Queue<String>();
 	
 	private boolean ready = true;
-	private boolean finished = false;
+	private boolean finished = true;
 
 	public Desk(){
 
@@ -57,25 +59,26 @@ public class Desk implements Runnable{
 
 	synchronized private void startRoutine() throws InterruptedException {
 		for(;;) {
-			System.out.print("hey");
+			System.out.println(name);
 			if(queue.lenght()>=1) {
 				ready = false;
-				if(finished == true) {
-					String data = queue.pop();
-					deskLayout.setCustomer(data);
-					
-					Timer customerTimer = new Timer();
-					customerTimer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							deskLayout.setCustomer("Free");
-							customerTimer.cancel();						
-						}}, (long) Math.floor((((Math.random()*10)/2)+1)));
-				}
+				String data = queue.pop();
+				System.out.println(data);
+				deskLayout.setCustomer(data);
+				
+				Timer customerTimer = new Timer();
+				customerTimer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						deskLayout.setCustomer("Free");
+						customerTimer.cancel();						
+					}}, (long) Math.floor((((Math.random()*10)/2)+1)));
 			}
 			else{
-				ready = true;
-				wait();
+				synchronized(LOCK) {
+					ready = true;
+					wait();
+				}
 			}
 		}
 	}

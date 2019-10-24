@@ -37,24 +37,30 @@ public class Dispenser implements Runnable{
 	}
 
 	synchronized private void startRoutine() throws InterruptedException {
-		synchronized(LOCK) {
-			for(;;) {
-				if(queue.lenght()>=1) {
-					String data = queue.pop();
-					if(Math.floor((desk1.queueLenght()+desk2.queueLenght())/3) > desk3.queueLenght()) {
-						desk3TR.notify();
+		for(;;) {
+			if(queue.lenght()>=1) {
+				String data = queue.pop();
+				if(Math.floor((desk1.queueLenght()+desk2.queueLenght())/3) > desk3.queueLenght()) {
+					synchronized(desk3.LOCK) {
+						desk3.LOCK.notify();
 						desk3.pushToQueue(data);
 					}
-					else if(desk1.queueLenght()<=desk2.queueLenght()) {
-						desk1TR.notify();
+				}
+				else if(desk1.queueLenght()<=desk2.queueLenght()) {
+					synchronized(desk1.LOCK) {
+						desk1.LOCK.notify();
 						desk1.pushToQueue(data);
 					}
-					else {
-						desk2TR.notify();
+				}
+				else {
+					synchronized(desk2.LOCK) {
+						desk2.LOCK.notify();
 						desk2.pushToQueue(data);
 					}
 				}
-				else{
+			}
+			else{
+				synchronized(LOCK) {
 					working = false;
 					LOCK.wait();
 					System.out.print("finally");
