@@ -4,6 +4,7 @@ public class Queue<Type> {
 
 	private Node<Type> head = null;
 	private Node<Type> end = null;
+	private int lenght = 0;
 
 	public void push(Type newObject){
 		Node<Type> newEnd = new Node<Type>(newObject, null);
@@ -17,6 +18,7 @@ public class Queue<Type> {
 		if(head == null){
 			head = end;
 		}
+		lenght++;
 	}
 
 	public Type pop(){
@@ -25,9 +27,14 @@ public class Queue<Type> {
 			head = head.getNext();
 			if(head == null)
 				end = null;
+			lenght--;
 			return object;
 		}
 		return null;
+	}
+	
+	public int lenght() {
+		return lenght;
 	}
 
 }

@@ -7,7 +7,7 @@ public class TotemController {
 
 	@FXML
 	public Label creditCardLabel;
-
+	
 	private Dispenser dispenser = new Dispenser();
 	private Thread dispenserTR = new Thread(dispenser);
 

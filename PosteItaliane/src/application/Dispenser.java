@@ -12,7 +12,8 @@ public class Dispenser implements Runnable{
 	private Thread desk2TR = new Thread(desk2);
 	private Thread desk3TR = new Thread(desk3);
 
-	Queue<String> queue = new Queue<String>();
+	private Queue<String> queue = new Queue<String>();
+	private boolean working = false;
 
 	Dispenser(){
 		desk1TR.run();
@@ -27,11 +28,36 @@ public class Dispenser implements Runnable{
 		return queue.pop();
 	}
 
-
+	synchronized private void start() throws InterruptedException {
+		for(;;) {
+			if(queue.lenght()>=1) {
+				String data = queue.pop();
+				if(Math.floor((desk1.queueLenght()+desk2.queueLenght())/3) > desk3.queueLenght()) {
+					desk3TR.notify();
+					desk3.pushToQueue(data);
+				}
+				else if(desk1.queueLenght()<=desk2.queueLenght()) {
+					desk1TR.notify();
+					desk1.pushToQueue(data);
+				}
+				else {
+					desk2TR.notify();
+					desk2.pushToQueue(data);
+				}
+			}
+			else{
+				working = false;
+				wait();
+			}
+		}
+	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
+		try {
+			start();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
