@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import application.Queue.Queue;
 
 public class Dispenser implements Runnable{
-	
+
 	final public Object LOCK = new Object();
 
 	private Desk desk1 = new Desk("Sportello 1");
@@ -22,11 +22,11 @@ public class Dispenser implements Runnable{
 
 	Dispenser(){
 		desk1TR.setName("Desk1");
-		desk1TR.run();
+		desk1TR.start();
 		desk2TR.setName("Desk2");
-		desk2TR.run();
+		desk2TR.start();
 		desk3TR.setName("Desk3");
-		desk3TR.run();
+		desk3TR.start();
 	}
 
 	public void pushToQueue(String newData){

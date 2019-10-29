@@ -7,19 +7,19 @@ public class TotemController {
 
 	@FXML
 	public Label creditCardLabel;
-	
+
 	private Dispenser dispenser = new Dispenser();
 	private Thread dispenserTR = new Thread(dispenser);
-	
+
 	private long creditCount = 0;
 	private long paymentCount = 0;
 	private long deliveryCount = 0;
 	private long singleOperationCount = 0;
 
 	public void bootDispenser() {
-		dispenserTR.run();
+		dispenserTR.start();
 	}
-	
+
 	synchronized public void creditRequested() {
 		String request = "CP"+ ++creditCount;
 		dispenser.pushToQueue(request);
@@ -48,7 +48,7 @@ public class TotemController {
 			dispenser.LOCK.notify();
 		}
 	}
-	
+
 	/*
 	public void prepareUIAnimations() {
 		Main.scene.widthProperty().addListener(new ChangeListener<Number>() {
