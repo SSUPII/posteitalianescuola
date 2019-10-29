@@ -12,23 +12,23 @@ import javafx.stage.Stage;
 public class Desk implements Runnable{
 
 	final public Object LOCK = new Object();
-	
+
 	public DeskController deskLayout;
 	private Stage primaryStage = new Stage();
 
 	private	String name = "NO DATA";
-	
+
 	private Queue<String> queue = new Queue<String>();
-	
+
 	private boolean ready = true;
 	private boolean finished = true;
 
 	public Desk(){
-
+		start();
 	}
 	public Desk(String name){
 		this.name = name;
-
+		start();
 	}
 
 	public void start() {
@@ -46,7 +46,7 @@ public class Desk implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void pushToQueue(String newData){
 		queue.push(newData);
 	}
@@ -65,27 +65,28 @@ public class Desk implements Runnable{
 				String data = queue.pop();
 				System.out.println(data);
 				deskLayout.setCustomer(data);
-				
+
 				Timer customerTimer = new Timer();
 				customerTimer.schedule(new TimerTask() {
 					@Override
 					public void run() {
 						deskLayout.setCustomer("Free");
-						customerTimer.cancel();						
+						customerTimer.cancel();
 					}}, (long) Math.floor((((Math.random()*10)/2)+1)));
 			}
 			else{
 				synchronized(LOCK) {
+					System.out.println("Zzz... "+name);
 					ready = true;
 					wait();
+					System.out.println("WOKE "+name);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void run() {
-		start();
 		Timer delay = new Timer();
 		delay.schedule(new TimerTask() {
 			@Override
@@ -97,7 +98,7 @@ public class Desk implements Runnable{
 					e.printStackTrace();
 				}
 			}}, 200);
-		
+
 	}
 
 }

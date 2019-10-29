@@ -38,7 +38,9 @@ public class Dispenser implements Runnable{
 
 	synchronized private void startRoutine() throws InterruptedException {
 		for(;;) {
+			System.out.println("Hey");
 			if(queue.lenght()>=1) {
+				System.out.println("Found something!");
 				String data = queue.pop();
 				if(Math.floor((desk1.queueLenght()+desk2.queueLenght())/3) > desk3.queueLenght()) {
 					synchronized(desk3.LOCK) {
@@ -61,11 +63,13 @@ public class Dispenser implements Runnable{
 			}
 			else{
 				synchronized(LOCK) {
+					System.out.println("Sleepy time");
 					working = false;
 					LOCK.wait();
-					System.out.print("finally");
+					System.out.println("finally");
 				}
 			}
+			System.out.println("Let's begin");
 		}
 	}
 
