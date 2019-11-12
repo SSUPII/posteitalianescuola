@@ -61,6 +61,7 @@ public class Desk implements Runnable{
 		for(;;) {
 			System.out.println(name);
 			if(queue.lenght()>=1) {
+				if(ready == true){
 				ready = false;
 				String data = queue.pop();
 				System.out.println(data);
@@ -71,14 +72,16 @@ public class Desk implements Runnable{
 					@Override
 					public void run() {
 						deskLayout.setCustomer("Free");
+						ready = true;
 						customerTimer.cancel();
-					}}, (long) Math.floor((((Math.random()*10)/2)+1)));
+					}}, (long) Math.floor((((Math.random()*10))+1))*1000);
+				}
 			}
 			else{
 				synchronized(LOCK) {
 					System.out.println("Zzz... "+name);
 					ready = true;
-					wait();
+					LOCK.wait();
 					System.out.println("WOKE "+name);
 				}
 			}

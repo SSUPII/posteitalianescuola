@@ -1,5 +1,6 @@
 package application;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -14,7 +15,16 @@ public class DeskController {
 		name.setText(newName);
 	}
 	public void setCustomer(String data) {
-		customer.setText(data);
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				customer.setText(data);
+
+			}
+
+		});
+
 	}
 
 }
