@@ -42,7 +42,9 @@ public class DeskController {
 			request+="\n";
 			historyLineCounter = 0;
 		}
-		history.setText(request+" "+history.getText());
+		else
+			request+=" ";
+		history.setText(request+history.getText());
 		historyLineCounter++;
 	}
 }
