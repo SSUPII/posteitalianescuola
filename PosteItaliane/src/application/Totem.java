@@ -29,7 +29,7 @@ public class Totem extends Application {
 			primaryStage.show();
 			totemLayout = fxml.<TotemController>getController();
 			
-			totemLayout.runTotem();
+			//totemLayout.runTotem();
 			totemLayout.bootDispenser();
 			
 			/*

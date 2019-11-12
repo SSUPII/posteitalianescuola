@@ -3,13 +3,20 @@ package application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class DeskController {
 
+	private final byte MAX_HISTORY_LINE_LENGHT = 10;
+	
+	@FXML
+	private TextArea history;
 	@FXML
 	public Label name;
 	@FXML
 	public Label customer;
+	
+	private byte historyLineCounter = 0;
 	
 	public void setDeskName(String newName){
 		name.setText(newName);
@@ -30,5 +37,12 @@ public class DeskController {
 			
 		});
 	}
-
+	public void writeHistory(String request) {
+		if(historyLineCounter >= MAX_HISTORY_LINE_LENGHT) {
+			request+="\n";
+			historyLineCounter = 0;
+		}
+		history.setText(request+" "+history.getText());
+		historyLineCounter++;
+	}
 }

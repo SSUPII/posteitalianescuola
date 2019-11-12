@@ -78,7 +78,8 @@ public class Desk extends Application implements Runnable {
 						public void run() {
 							deskLayout.setCustomer("Free");
 							ready = true;
-							queue.pop();
+							Request farewell = queue.pop();
+							deskLayout.writeHistory(farewell.getName());
 							customerTimer.cancel();
 						}}, data.getTime());
 				}
