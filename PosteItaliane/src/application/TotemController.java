@@ -1,5 +1,9 @@
 package application;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import application.Queue.Queue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -15,33 +19,72 @@ public class TotemController {
 	private long paymentCount = 0;
 	private long deliveryCount = 0;
 	private long singleOperationCount = 0;
+	
+	private Queue<Request> waitingCreditRequests = new Queue<Request>();
+	private Queue<Request> waitingPaymentRequests = new Queue<Request>();
+	private Queue<Request> waitingDeliveryRequests = new Queue<Request>();
+	private Queue<Request> waitingPriorityRequests = new Queue<Request>();
 
 	public void bootDispenser() {
 		dispenserTR.start();
 	}
 	
-	synchronized private void sendRequest(String request) {
+	public void runTotem() {
+		boolean hasTimePassed = false;
+		for(;;) {
+			if(hasTimePassed) {
+				hasTimePassed = false;
+				String text="";
+				for(long i = 0;i<waitingCreditRequests.lenght();i++)
+					text+=waitingCreditRequests.get().getName()+"\n";
+				
+				new Timer().schedule(new TimerTask() {
+					@Override
+					public void run() {
+						hasTimePassed = true;
+						waitingCreditRequests.pop();
+					}
+				}, waitingCreditRequests.get().getTime());
+			}
+		}
+	}
+	
+	synchronized private void sendRequest(Request request) {
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
 			dispenser.LOCK.notify();
 		}
 	}
 	
+	private long randomTimer() {
+		return (long) ((Math.floor((((Math.random()*10))+1))*1000)/2d);
+	}
+	
 	public void creditRequested() {
 		String request = "CP"+ ++creditCount;
-		sendRequest(request);
+		Request newObject = new Request(request,randomTimer());
+		sendRequest(newObject);
+		waitingCreditRequests.push(newObject);
 	}
 	public void paymentRequested() {
 		String request = "P"+ ++paymentCount;
-		sendRequest(request);
+		Request newObject = new Request(request,randomTimer());
+		sendRequest(newObject);
+		waitingPaymentRequests.push(newObject);
 	}
 	public void deliveryRequested() {
 		String request = "SR"+ ++deliveryCount;
-		sendRequest(request);
+		Request newObject = new Request(request,randomTimer());
+		sendRequest(newObject);
+		waitingDeliveryRequests.push(newObject);
 	}
 	public void singleOperationRequested() {
 		String request = "U"+ ++singleOperationCount;
-		sendRequest(request);
+		Request newObject = new Request(request,randomTimer());
+		sendRequest(newObject);
+		waitingPriorityRequests.push(newObject);
 	}
+
+	
 	
 }

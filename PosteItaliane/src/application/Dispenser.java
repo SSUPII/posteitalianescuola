@@ -28,8 +28,8 @@ public class Dispenser implements Runnable{
 		desk3TR.start();
 	}
 
-	public void pushToQueue(String newData){
-		queue.push(new Request(newData,(long) (Math.floor((((Math.random()*10))+1))*1000)));
+	public void pushToQueue(Request newData){
+		queue.push(newData);
 	}
 	public Request popFromQueue(){
 		return queue.pop();

@@ -93,8 +93,7 @@ public class Desk extends Application implements Runnable {
 	
 	@Override
 	public void run() {
-		Timer delay = new Timer();
-		delay.schedule(new TimerTask() {
+		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
 				try{
