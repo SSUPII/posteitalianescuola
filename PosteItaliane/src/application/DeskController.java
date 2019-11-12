@@ -10,13 +10,16 @@ public class DeskController {
 	public Label name;
 	@FXML
 	public Label customer;
-	@FXML
-	public Label queueLenght;
 	
 	public void setDeskName(String newName){
 		name.setText(newName);
 	}
 	public void setCustomer(String data) {
+		/*
+		 * Chiedi al Thread principale di modificare l'interfaccia.
+		 * Thread creati dall'utente hanno accesso limitato alle funzioni JavaFX.
+		 * Platform.runLater(...) assegna un qualsiasi compito al thread principale JavaFX
+		 */
 		Platform.runLater(new Runnable() {
 
 			@Override

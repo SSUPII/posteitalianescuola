@@ -17,8 +17,7 @@ public class Dispenser implements Runnable{
 	private Thread desk2TR = new Thread(desk2);
 	private Thread desk3TR = new Thread(desk3);
 
-	private Queue<String> queue = new Queue<String>();
-	private boolean working = false;
+	private Queue<Request> queue = new Queue<Request>();
 
 	Dispenser(){
 		desk1TR.setName("Desk1");
@@ -30,17 +29,17 @@ public class Dispenser implements Runnable{
 	}
 
 	public void pushToQueue(String newData){
-		queue.push(newData);
+		queue.push(new Request(newData,(long) (Math.floor((((Math.random()*10))+1))*1000)));
 	}
-	public String popFromQueue(){
+	public Request popFromQueue(){
 		return queue.pop();
 	}
 
 	private void startRoutine() throws InterruptedException {
 		for(;;) {
 			if(queue.lenght()>=1) {
-				String data = queue.pop();
-				if(data.contains("U")) {
+				Request data = queue.pop();
+				if(data.getName().contains("U")) {
 					if(desk1.getQueueLenght() <= desk2.getQueueLenght() && desk1.getQueueLenght() <= desk3.getQueueLenght())
 						sendToDesk(desk1,data);
 					else if (desk2.getQueueLenght() <= desk3.getQueueLenght())
@@ -60,15 +59,13 @@ public class Dispenser implements Runnable{
 			}
 			else{
 				synchronized(LOCK) {
-					working = false;
 					LOCK.wait();
-					System.out.print("finally");
 				}
 			}
 		}
 	}
 	
-	private void sendToDesk(Desk destination, String data) {
+	private void sendToDesk(Desk destination, Request data) {
 		destination.pushToQueue(data);
 		synchronized(destination.LOCK) {
 			

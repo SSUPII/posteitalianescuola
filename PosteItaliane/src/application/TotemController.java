@@ -20,49 +20,28 @@ public class TotemController {
 		dispenserTR.start();
 	}
 	
-	synchronized public void creditRequested() {
-		String request = "CP"+ ++creditCount;
-		dispenser.pushToQueue(request);
-		synchronized(dispenser.LOCK) {
-			dispenser.LOCK.notify();
-		}
-	}
-	synchronized public void paymentRequested() {
-		String request = "P"+ ++paymentCount;
-		dispenser.pushToQueue(request);
-		synchronized(dispenser.LOCK) {
-			dispenser.LOCK.notify();
-		}
-	}
-	synchronized public void deliveryRequested() {
-		String request = "SR"+ ++deliveryCount;
-		dispenser.pushToQueue(request);
-		synchronized(dispenser.LOCK) {
-			dispenser.LOCK.notify();
-		}
-	}
-	synchronized public void singleOperationRequested() {
-		String request = "U"+ ++singleOperationCount;
+	synchronized private void sendRequest(String request) {
 		dispenser.pushToQueue(request);
 		synchronized(dispenser.LOCK) {
 			dispenser.LOCK.notify();
 		}
 	}
 	
-	/*
-	public void prepareUIAnimations() {
-		Main.scene.widthProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> value, Number oldWidth, Number newWidth) {
-				if(newWidth.intValue() < 700) {
-					creditCardLabel.setFont(new Font("ZrnicRg-Regular",20));
-				}
-
-			}
-
-		});
-
+	public void creditRequested() {
+		String request = "CP"+ ++creditCount;
+		sendRequest(request);
 	}
-	*/
+	public void paymentRequested() {
+		String request = "P"+ ++paymentCount;
+		sendRequest(request);
+	}
+	public void deliveryRequested() {
+		String request = "SR"+ ++deliveryCount;
+		sendRequest(request);
+	}
+	public void singleOperationRequested() {
+		String request = "U"+ ++singleOperationCount;
+		sendRequest(request);
+	}
+	
 }

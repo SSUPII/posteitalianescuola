@@ -20,7 +20,7 @@ public class Desk extends Application implements Runnable {
 	
 	long queueLenght = 0; 
 	
-	private Queue<String> queue = new Queue<String>();
+	private Queue<Request> queue = new Queue<Request>();
 	
 	private boolean ready = true;
 
@@ -51,10 +51,10 @@ public class Desk extends Application implements Runnable {
 		
 	}
 	
-	public void pushToQueue(String newData){
+	public void pushToQueue(Request newData){
 		queue.push(newData);
 	}
-	public String popFromQueue(){
+	public Request popFromQueue(){
 		return queue.pop();
 	}
 	public int getQueueLenght() {
@@ -64,15 +64,13 @@ public class Desk extends Application implements Runnable {
 
 	synchronized private void startRoutine() throws InterruptedException {
 		for(;;) {
-			System.out.println(name);
 			Thread.sleep(160);
 			if(queue.lenght()>=1) {
 				if(ready == true) {
 					ready = false;
-					String data = queue.get();
+					Request data = queue.get();
 					
-					System.out.println(data);
-					deskLayout.setCustomer(data);
+					deskLayout.setCustomer(data.getName());
 					
 					Timer customerTimer = new Timer();
 					customerTimer.schedule(new TimerTask() {
@@ -82,7 +80,7 @@ public class Desk extends Application implements Runnable {
 							ready = true;
 							queue.pop();
 							customerTimer.cancel();
-						}}, (long) (Math.floor((((Math.random()*10))+1))*1000));
+						}}, data.getTime());
 				}
 			}
 			else{
