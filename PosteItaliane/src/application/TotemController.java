@@ -17,7 +17,7 @@ public class TotemController {
 	private long singleOperationCount = 0;
 
 	public void bootDispenser() {
-		dispenserTR.run();
+		dispenserTR.start();
 	}
 	
 	synchronized public void creditRequested() {

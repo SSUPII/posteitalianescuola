@@ -4,39 +4,42 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import application.Queue.Queue;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Desk implements Runnable{
+public class Desk extends Application implements Runnable {
 
 	final public Object LOCK = new Object();
 	
 	public DeskController deskLayout;
-	private Stage primaryStage = new Stage();
 
 	private	String name = "NO DATA";
+	
+	long queueLenght = 0; 
 	
 	private Queue<String> queue = new Queue<String>();
 	
 	private boolean ready = true;
-	private boolean finished = true;
 
 	public Desk(){
-
+		start(new Stage());
 	}
 	public Desk(String name){
 		this.name = name;
-
+		start(new Stage());
 	}
 
-	public void start() {
+	@Override
+	public void start(Stage primaryStage){
 		try {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(getClass().getResource("DeskLayout.fxml"));
 			Parent root = fxml.load();
-			Scene scene = new Scene(root,400,300);
+			Scene scene = new Scene(root,400,200);
+			primaryStage.setResizable(false);
 			scene.getStylesheets().add(getClass().getResource("desk.css").toExternalForm());
 			deskLayout = fxml.<DeskController>getController();
 			primaryStage.setScene(scene);
@@ -45,6 +48,7 @@ public class Desk implements Runnable{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void pushToQueue(String newData){
@@ -53,31 +57,37 @@ public class Desk implements Runnable{
 	public String popFromQueue(){
 		return queue.pop();
 	}
-	public int queueLenght() {
+	public int getQueueLenght() {
 		return queue.lenght();
 	}
+	
 
 	synchronized private void startRoutine() throws InterruptedException {
 		for(;;) {
 			System.out.println(name);
+			Thread.sleep(160);
 			if(queue.lenght()>=1) {
-				ready = false;
-				String data = queue.pop();
-				System.out.println(data);
-				deskLayout.setCustomer(data);
-				
-				Timer customerTimer = new Timer();
-				customerTimer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						deskLayout.setCustomer("Free");
-						customerTimer.cancel();						
-					}}, (long) Math.floor((((Math.random()*10)/2)+1)));
+				if(ready == true) {
+					ready = false;
+					String data = queue.get();
+					
+					System.out.println(data);
+					deskLayout.setCustomer(data);
+					
+					Timer customerTimer = new Timer();
+					customerTimer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							deskLayout.setCustomer("Free");
+							ready = true;
+							queue.pop();
+							customerTimer.cancel();
+						}}, (long) (Math.floor((((Math.random()*10))+1))*1000));
+				}
 			}
 			else{
 				synchronized(LOCK) {
-					ready = true;
-					wait();
+					LOCK.wait();
 				}
 			}
 		}
@@ -85,7 +95,6 @@ public class Desk implements Runnable{
 	
 	@Override
 	public void run() {
-		start();
 		Timer delay = new Timer();
 		delay.schedule(new TimerTask() {
 			@Override
@@ -99,5 +108,7 @@ public class Desk implements Runnable{
 			}}, 200);
 		
 	}
+	
+	
 
 }

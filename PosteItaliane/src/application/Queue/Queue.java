@@ -21,7 +21,15 @@ public class Queue<Type> {
 		lenght++;
 	}
 
-	public Type pop(){
+	public Type get() {
+		if(head != null){
+			Type object = head.getData();
+			return object;
+		}
+		return null;
+	}
+	
+	public Type pop() {
 		if(head != null){
 			Type object = head.getData();
 			head = head.getNext();

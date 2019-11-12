@@ -22,11 +22,11 @@ public class Dispenser implements Runnable{
 
 	Dispenser(){
 		desk1TR.setName("Desk1");
-		desk1TR.run();
+		desk1TR.start();
 		desk2TR.setName("Desk2");
-		desk2TR.run();
+		desk2TR.start();
 		desk3TR.setName("Desk3");
-		desk3TR.run();
+		desk3TR.start();
 	}
 
 	public void pushToQueue(String newData){
@@ -36,27 +36,26 @@ public class Dispenser implements Runnable{
 		return queue.pop();
 	}
 
-	synchronized private void startRoutine() throws InterruptedException {
+	private void startRoutine() throws InterruptedException {
 		for(;;) {
 			if(queue.lenght()>=1) {
 				String data = queue.pop();
-				if(Math.floor((desk1.queueLenght()+desk2.queueLenght())/3) > desk3.queueLenght()) {
-					synchronized(desk3.LOCK) {
-						desk3.LOCK.notify();
-						desk3.pushToQueue(data);
-					}
+				if(data.contains("U")) {
+					if(desk1.getQueueLenght() <= desk2.getQueueLenght() && desk1.getQueueLenght() <= desk3.getQueueLenght())
+						sendToDesk(desk1,data);
+					else if (desk2.getQueueLenght() <= desk3.getQueueLenght())
+						sendToDesk(desk2,data);
+					else
+						sendToDesk(desk3,data);
 				}
-				else if(desk1.queueLenght()<=desk2.queueLenght()) {
-					synchronized(desk1.LOCK) {
-						desk1.LOCK.notify();
-						desk1.pushToQueue(data);
-					}
+				else if(Math.floor((desk1.getQueueLenght()+desk2.getQueueLenght())/3) > desk3.getQueueLenght()) {
+					sendToDesk(desk3,data);
+				}
+				else if(desk1.getQueueLenght()<=desk2.getQueueLenght()) {
+					sendToDesk(desk1,data);
 				}
 				else {
-					synchronized(desk2.LOCK) {
-						desk2.LOCK.notify();
-						desk2.pushToQueue(data);
-					}
+					sendToDesk(desk2,data);
 				}
 			}
 			else{
@@ -66,6 +65,15 @@ public class Dispenser implements Runnable{
 					System.out.print("finally");
 				}
 			}
+		}
+	}
+	
+	private void sendToDesk(Desk destination, String data) {
+		destination.pushToQueue(data);
+		synchronized(destination.LOCK) {
+			
+			destination.LOCK.notify();
+			
 		}
 	}
 
